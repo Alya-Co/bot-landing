@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Бот для записи и напоминаний</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --primary: #146B5D; --cta: #E2653F; }
+  body { margin: 0; font-family: 'Work Sans', system-ui, sans-serif; color: #1E2321; background: #F6F3EE; }
+  h1, h2, h3 { font-family: 'Sora', system-ui, sans-serif; margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; font-weight: 600; font-size: 17px; border: none; cursor: pointer; font-family: 'Work Sans', sans-serif; }
+  .card { background: #FFFFFF; border: 1px solid #E4DED2; border-radius: 18px; }
+  h1.hero-title { font-size: clamp(32px, 7vw, 56px); }
+  h2.section-title { font-size: clamp(26px, 5vw, 32px); }
+  h2.cta-title { font-size: clamp(24px, 5vw, 32px); }
+  .demo-pick { text-align: left; cursor: pointer; font-family: 'Work Sans', sans-serif; }
+  .opt-btn { cursor: pointer; font-family: 'Work Sans', sans-serif; min-height: 44px; }
+  .icon-btn { cursor: pointer; border: none; background: transparent; display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; }
+  table.roi th, table.roi td { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div style="width: 100%; box-sizing: border-box; position: relative;">
+
+  <!-- NAV -->
+  <div style="max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 28px 32px;">
+    <div style="font-family: 'Sora', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.01em;">Бот для бизнеса</div>
+    <a href="https://wa.me/34602509014" class="btn" style="background: var(--cta); color: #FFFFFF;">Написать в WhatsApp</a>
+  </div>
+
+  <!-- HERO -->
+  <div style="max-width: 1080px; margin: 0 auto; padding: 40px 32px 80px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start;">
+    <div style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; background: #EAF2EF; color: var(--primary); font-size: 14px; font-weight: 600;">Готово за 2 рабочих дня</div>
+    <h1 class="hero-title" style="line-height: 1.12; letter-spacing: -0.02em; max-width: 720px;">Ни один клиент не потеряется — даже пока вы спите</h1>
+    <p style="font-size: 20px; line-height: 1.5; color: #4B554F; max-width: 620px;">WhatsApp-бот принимает заявки, записывает на приём и сам напоминает клиенту о визите. Все данные падают в вашу CRM или таблицу — руками ничего переносить не нужно.</p>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <a href="https://wa.me/34602509014" class="btn" style="background: var(--cta); color: #FFFFFF;">Обсудить бота для моего бизнеса</a>
+      <a href="#pricing" class="btn" style="background: transparent; border: 1px solid #C9C2B4; color: #1E2321;">Посмотреть тарифы</a>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <div style="background: #1E2321; padding: 72px 32px;">
+    <div style="max-width: 1080px; margin: 0 auto;">
+      <h2 class="section-title" style="color: #F6F3EE; max-width: 560px; margin-bottom: 40px;">Знакомая ситуация?</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px;">
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--cta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 17px;">Пропущенные звонки</div>
+          <div style="color: #A9B0AA; font-size: 15px; line-height: 1.5;">Клиент звонит в нерабочее время или пока вы заняты с другим посетителем — и уходит к конкуренту.</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--cta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 17px;">Забытые визиты</div>
+          <div style="color: #A9B0AA; font-size: 15px; line-height: 1.5;">Клиент записался неделю назад, а сегодня просто забыл — время в расписании потеряно безвозвратно.</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--cta)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H1v3h8v3l5-4.5L9 8v3z"/><path d="M15 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/></svg>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 17px;">Ручной перенос данных</div>
+          <div style="color: #A9B0AA; font-size: 15px; line-height: 1.5;">Каждую заявку из переписки нужно вручную вбивать в таблицу или CRM — время уходит, и легко ошибиться.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div style="max-width: 1080px; margin: 0 auto; padding: 80px 32px;">
+    <h2 class="section-title" style="max-width: 560px; margin-bottom: 12px;">Что делает бот</h2>
+    <p style="color: #5B655F; font-size: 17px; max-width: 560px; margin-bottom: 48px;">Один сценарий закрывает весь цикл — от первого сообщения клиента до отметки в вашей системе.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+
+      <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div style="font-weight: 600; font-size: 18px;">Ни одна заявка не теряется</div>
+        <div style="color: #5B655F; font-size: 15px; line-height: 1.5;">Каждое обращение сразу попадает в вашу CRM или обычную таблицу — без ручного ввода.</div>
+      </div>
+
+      <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <div style="font-weight: 600; font-size: 18px;">Работает 24/7</div>
+        <div style="color: #5B655F; font-size: 15px; line-height: 1.5;">Бот отвечает и записывает клиентов даже ночью, в выходные и пока вы заняты.</div>
+      </div>
+
+      <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <div style="font-weight: 600; font-size: 18px;">Напоминания в несколько этапов</div>
+        <div style="color: #5B655F; font-size: 15px; line-height: 1.5;">За день и за пару часов до визита — клиент подтверждает одним нажатием, число неявок падает.</div>
+      </div>
+
+      <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <div style="font-weight: 600; font-size: 18px;">Сам достаёт нужную информацию</div>
+        <div style="color: #5B655F; font-size: 15px; line-height: 1.5;">Спросите бота — он найдёт ответ в переписке с клиентами, не нужно копаться самим.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WHERE IT TALKS -->
+  <div style="max-width: 1080px; margin: 0 auto; padding: 0 32px 80px;">
+    <h2 class="section-title" style="margin-bottom: 12px;">Где бот общается с клиентом</h2>
+    <p style="color: #5B655F; font-size: 17px; max-width: 680px; margin-bottom: 32px;">Два варианта — выбираете под то, откуда к вам приходят клиенты.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+      <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="font-weight: 600; font-size: 18px;">Виджет-чат на сайте</div>
+        <div style="color: #5B655F; font-size: 15px; line-height: 1.6;">Иконка чата в углу страницы — клиент пишет, не уходя с сайта. Хороший вариант, если на сайт и так идёт трафик.</div>
+      </div>
+      <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 10px; border-color: var(--primary); border-width: 2px;">
+        <div style="font-weight: 600; font-size: 18px;">Сразу в WhatsApp</div>
+        <div style="color: #5B655F; font-size: 15px; line-height: 1.6;">Кнопка на сайте, в рекламе или в карточке Google ведёт прямо в WhatsApp — и там с клиентом сразу говорит бот, без отдельного окна чата.</div>
+      </div>
+    </div>
+    <p style="color: #8A9089; font-size: 14px; margin-top: 16px; max-width: 680px; line-height: 1.5;">Чаще всего делаем гибрид: кнопка на сайте есть, но ведёт в WhatsApp с уже готовым первым сообщением — клиент продолжает в привычном приложении.</p>
+  </div>
+
+  <!-- DEMO -->
+  <div style="background: #EAF2EF; padding: 80px 32px;">
+    <div style="max-width: 1080px; margin: 0 auto;">
+      <h2 class="section-title" style="max-width: 620px; margin-bottom: 12px;">Попробуйте сами, как это работает</h2>
+      <p style="color: #4B554F; font-size: 17px; max-width: 620px; margin-bottom: 32px;">Выберите ситуацию и пройдите диалог с ботом так, как это увидел бы ваш клиент.</p>
+
+      <div id="demo-picks" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px;"></div>
+      <div id="demo-chat"></div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div style="background: #EFEAE0; padding: 80px 32px;">
+    <div style="max-width: 1080px; margin: 0 auto;">
+      <h2 class="section-title" style="margin-bottom: 48px;">Как это делается</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px 32px;">
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: 'Sora', sans-serif; font-size: 32px; font-weight: 700; color: var(--primary);">01</div>
+          <div style="font-weight: 600; font-size: 16px;">Встреча и бриф</div>
+          <div style="color: #5B655F; font-size: 14px; line-height: 1.5;">Обсуждаем цели, забираем всю нужную информацию о вашем бизнесе.</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: 'Sora', sans-serif; font-size: 32px; font-weight: 700; color: var(--primary);">02</div>
+          <div style="font-weight: 600; font-size: 16px;">Сценарий и логика</div>
+          <div style="color: #5B655F; font-size: 14px; line-height: 1.5;">Прописываем вопросы, ответы и правила — под ваши услуги и график.</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: 'Sora', sans-serif; font-size: 32px; font-weight: 700; color: var(--primary);">03</div>
+          <div style="font-weight: 600; font-size: 16px;">Подключение</div>
+          <div style="color: #5B655F; font-size: 14px; line-height: 1.5;">Связываем бота с вашей CRM, таблицей или календарём записи.</div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: 'Sora', sans-serif; font-size: 32px; font-weight: 700; color: var(--primary);">04</div>
+          <div style="font-weight: 600; font-size: 16px;">Тест и запуск</div>
+          <div style="color: #5B655F; font-size: 14px; line-height: 1.5;">Проверяем сценарии вместе с вами и включаем бота на постоянную работу.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div id="pricing" style="max-width: 1080px; margin: 0 auto; padding: 80px 32px;">
+    <h2 class="section-title" style="margin-bottom: 12px;">Тарифы</h2>
+    <p style="color: #5B655F; font-size: 17px; margin-bottom: 48px;">Разово за настройку, дальше — небольшая ежемесячная поддержка.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+
+      <div class="card" style="padding: 32px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font-weight: 600; font-size: 18px;">Базовый</div>
+        <div style="font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 700;">от €150–400</div>
+        <div style="color: #5B655F; font-size: 14px;">+ €0–30/мес поддержка</div>
+        <div style="height: 1px; background: #E4DED2;"></div>
+        <div style="color: #4B554F; font-size: 15px; line-height: 1.6;">Ответы на типовые вопросы: часы работы, адрес, цены, услуги. Кнопочное меню.</div>
+      </div>
+
+      <div class="card" style="padding: 32px; display: flex; flex-direction: column; gap: 16px; border-color: var(--primary); border-width: 2px;">
+        <div style="font-weight: 600; font-size: 18px;">Запись и напоминания</div>
+        <div style="font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 700;">от €300–700</div>
+        <div style="color: #5B655F; font-size: 14px;">+ €20–50/мес поддержка</div>
+        <div style="height: 1px; background: #E4DED2;"></div>
+        <div style="color: #4B554F; font-size: 15px; line-height: 1.6;">Бронирование слотов, подтверждение записи, автоматические напоминания за день и за пару часов.</div>
+      </div>
+
+      <div class="card" style="padding: 32px; display: flex; flex-direction: column; gap: 16px;">
+        <div style="font-weight: 600; font-size: 18px;">ИИ + CRM</div>
+        <div style="font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 700;">от €700–2000</div>
+        <div style="color: #5B655F; font-size: 14px;">+ €50–150/мес поддержка</div>
+        <div style="height: 1px; background: #E4DED2;"></div>
+        <div style="color: #4B554F; font-size: 15px; line-height: 1.6;">Отвечает "умно" по базе знаний вашего бизнеса, каждая заявка сразу падает в CRM или таблицу.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROI -->
+  <div style="max-width: 1080px; margin: 0 auto; padding: 0 32px 80px;">
+    <h2 class="section-title" style="margin-bottom: 12px;">Сколько вы теряете на неявках</h2>
+    <p style="color: #5B655F; font-size: 16px; max-width: 700px; margin-bottom: 24px; line-height: 1.6;">Пример цен: стрижка €15, окрашивание €35. Доля неявок — 5–10% записей, по данным Phorest Salon Software. В расчёте взят средний чек €21 (70% стрижки, 30% окрашивание) и 26 рабочих дней в месяц.</p>
+
+    <div style="overflow-x: auto; margin-bottom: 28px;">
+      <table class="roi" style="width: 100%; border-collapse: collapse; min-width: 560px;">
+        <thead>
+          <tr style="border-bottom: 2px solid #C9C2B4;">
+            <th style="text-align: left; padding: 12px 10px; font-size: 14px; color: #5B655F; font-weight: 600;">Салон</th>
+            <th style="text-align: left; padding: 12px 10px; font-size: 14px; color: #5B655F; font-weight: 600;">Клиентов/день</th>
+            <th style="text-align: left; padding: 12px 10px; font-size: 14px; color: #5B655F; font-weight: 600;">Записей/мес</th>
+            <th style="text-align: left; padding: 12px 10px; font-size: 14px; color: #5B655F; font-weight: 600;">Неявок (10%)</th>
+            <th style="text-align: left; padding: 12px 10px; font-size: 14px; color: #5B655F; font-weight: 600;">Потери/мес</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid #E4DED2;">
+            <td style="padding: 12px 10px; font-size: 15px;">Маленький</td>
+            <td style="padding: 12px 10px; font-size: 15px;">8</td>
+            <td style="padding: 12px 10px; font-size: 15px;">208</td>
+            <td style="padding: 12px 10px; font-size: 15px;">21</td>
+            <td style="padding: 12px 10px; font-size: 15px; font-weight: 600;">≈ €440</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #E4DED2;">
+            <td style="padding: 12px 10px; font-size: 15px;">Средний</td>
+            <td style="padding: 12px 10px; font-size: 15px;">15</td>
+            <td style="padding: 12px 10px; font-size: 15px;">390</td>
+            <td style="padding: 12px 10px; font-size: 15px;">39</td>
+            <td style="padding: 12px 10px; font-size: 15px; font-weight: 600;">≈ €820</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 10px; font-size: 15px;">Крупный</td>
+            <td style="padding: 12px 10px; font-size: 15px;">25</td>
+            <td style="padding: 12px 10px; font-size: 15px;">650</td>
+            <td style="padding: 12px 10px; font-size: 15px;">65</td>
+            <td style="padding: 12px 10px; font-size: 15px; font-weight: 600;">≈ €1370</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="padding: 28px; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-weight: 600; font-size: 17px;">Окупаемость — на примере среднего салона</div>
+      <div style="color: #4B554F; font-size: 15px; line-height: 1.6;">Автоматические напоминания снижают число неявок на 30–40% — это подтверждают отраслевые исследования систем бронирования. Для среднего салона (15 клиентов в день) это около 14 сохранённых записей в месяц, то есть примерно €290. При тарифе «Запись и напоминания» (от €300–700 разово) бот окупается уже за 2 месяца работы.</div>
+    </div>
+  </div>
+
+  <!-- QUOTE-BASED SALES -->
+  <div style="background: #1E2321; padding: 80px 32px;">
+    <div style="max-width: 1080px; margin: 0 auto;">
+      <h2 class="section-title" style="color: #F6F3EE; max-width: 700px; margin-bottom: 12px;">Если вы продаёте по смете: окна, мебель, ремонт — и вам важна скорость ответа</h2>
+      <p style="color: #A9B0AA; font-size: 17px; max-width: 700px; margin-bottom: 40px; line-height: 1.6;">Бот здесь работает иначе, чем в записи на услугу: не бронирует время, а сам разбирается, что нужно клиенту, и следит, чтобы заявка не зависла.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 40px;">
+
+        <div class="card" style="background: #2A2F2C; border-color: #3C423E; padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="color: var(--cta); font-weight: 700; font-size: 14px;">01</div>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 16px;">Отвечает мгновенно</div>
+          <div style="color: #A9B0AA; font-size: 14px; line-height: 1.5;">Не через 2 часа, а в момент обращения — подтверждает заявку и начинает уточнять детали.</div>
+        </div>
+
+        <div class="card" style="background: #2A2F2C; border-color: #3C423E; padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="color: var(--cta); font-weight: 700; font-size: 14px;">02</div>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 16px;">Сам выясняет, что нужно</div>
+          <div style="color: #A9B0AA; font-size: 14px; line-height: 1.5;">Тип товара из каталога, объём, адрес объекта, желаемые сроки — к моменту передачи менеджеру всё уже собрано.</div>
+        </div>
+
+        <div class="card" style="background: #2A2F2C; border-color: #3C423E; padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="color: var(--cta); font-weight: 700; font-size: 14px;">03</div>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 16px;">Передаёт готовую заявку менеджеру</div>
+          <div style="color: #A9B0AA; font-size: 14px; line-height: 1.5;">Структурированная карточка падает нужному человеку сразу, а не лежит в общей переписке.</div>
+        </div>
+
+        <div class="card" style="background: #2A2F2C; border-color: #3C423E; padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="color: var(--cta); font-weight: 700; font-size: 14px;">04</div>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 16px;">Следит за сроком сметы</div>
+          <div style="color: #A9B0AA; font-size: 14px; line-height: 1.5;">Если расчёт не готов в оговорённое время (например, 4 часа) — система сама поднимает алерт.</div>
+        </div>
+
+        <div class="card" style="background: #2A2F2C; border-color: #3C423E; padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="color: var(--cta); font-weight: 700; font-size: 14px;">05</div>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 16px;">Напоминает менеджеру</div>
+          <div style="color: #A9B0AA; font-size: 14px; line-height: 1.5;">Если он не связался с клиентом в срок — бот напомнит сам, не дожидаясь, пока клиент уйдёт к конкуренту.</div>
+        </div>
+
+        <div class="card" style="background: #2A2F2C; border-color: #3C423E; padding: 24px; display: flex; flex-direction: column; gap: 8px;">
+          <div style="color: var(--cta); font-weight: 700; font-size: 14px;">06</div>
+          <div style="color: #F6F3EE; font-weight: 600; font-size: 16px;">Владелец — только смотрит отчёт</div>
+          <div style="color: #A9B0AA; font-size: 14px; line-height: 1.5;">Вся логика работает сама. Вам нужна только сводная статистика: заявки, просрочки, скорость реакции.</div>
+        </div>
+
+      </div>
+
+      <h3 style="color: #F6F3EE; font-size: 22px; margin-bottom: 8px;">Сколько теряет компания на медленном ответе</h3>
+      <p style="color: #A9B0AA; font-size: 15px; max-width: 700px; margin-bottom: 20px; line-height: 1.6;">Цена окна с установкой — €300–400 в среднем по Испании (по данным сервисов сравнения цен), в расчёте взято €350. Типовой заказ — 5 окон, средний чек €1750.</p>
+
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table class="roi" style="width: 100%; border-collapse: collapse; min-width: 480px;">
+          <tbody>
+            <tr style="border-bottom: 1px solid #3C423E;">
+              <td style="padding: 12px 10px; font-size: 15px; color: #A9B0AA;">Заявок в месяц (пример)</td>
+              <td style="padding: 12px 10px; font-size: 15px; color: #F6F3EE; font-weight: 600; text-align: right;">40</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #3C423E;">
+              <td style="padding: 12px 10px; font-size: 15px; color: #A9B0AA;">Конверсия в сделку при мгновенном ответе</td>
+              <td style="padding: 12px 10px; font-size: 15px; color: #F6F3EE; font-weight: 600; text-align: right;">~20% → 8 сделок</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #3C423E;">
+              <td style="padding: 12px 10px; font-size: 15px; color: #A9B0AA;">Конверсия при ответе через 2+ часа</td>
+              <td style="padding: 12px 10px; font-size: 15px; color: #F6F3EE; font-weight: 600; text-align: right;">~10% → 4 сделки</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px 10px; font-size: 16px; color: #F6F3EE; font-weight: 700;">Потерянная выручка в месяц</td>
+              <td style="padding: 12px 10px; font-size: 16px; color: var(--cta); font-weight: 700; text-align: right;">≈ €7000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color: #7A817B; font-size: 13px; max-width: 700px; line-height: 1.5;">Заявки в месяц и конверсия — пример для расчёта, замените на свои цифры. Падение конверсии при задержке ответа подтверждено исследованиями: Harvard Business Review (анализ 1,25 млн заявок) — почти в 7 раз ниже шансы квалифицировать лида при ответе позже часа; Clearbit/Chili Piper — около 60% заявок теряется именно из-за медленного ответа.</p>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div style="background: var(--primary); padding: 72px 32px;">
+    <div style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+      <h2 class="cta-title" style="color: #FFFFFF;">Расскажите о своём бизнесе — прикинем сценарий бесплатно</h2>
+      <a href="https://wa.me/34602509014" class="btn" style="background: #FFFFFF; color: var(--primary);">Написать в WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="padding: 40px 32px;">
+    <div style="max-width: 1080px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #5B655F; font-size: 14px;">
+      <div>Бот для бизнеса</div>
+      <div>+34 602 50 90 14</div>
+    </div>
+  </div>
+
+  <!-- OWN BOT WIDGET -->
+  <div id="own-bot-widget"></div>
+
+</div>
+
+<script>
+(function () {
+  var PRIMARY = '#146B5D';
+  var CTA = '#E2653F';
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  var scenarios = {
+    hair: {
+      title: 'Парикмахерская — запись на стрижку',
+      subtitle: 'Клиент хочет записаться',
+      nodes: {
+        start: { text: 'Здравствуйте! Что вас интересует?', options: [
+          { label: 'Стрижка', next: 'master' },
+          { label: 'Окрашивание', next: 'master' },
+        ]},
+        master: { text: 'Записываем. У вас есть мастер, к которому вы обычно ходите?', options: [
+          { label: 'Да, к Елене', next: 'time' },
+          { label: 'Любой свободный', next: 'time' },
+        ]},
+        time: { text: 'Когда вам удобно?', options: [
+          { label: 'Сегодня в 18:00', next: 'reminders' },
+          { label: 'Завтра в 11:00', next: 'reminders' },
+        ]},
+        reminders: { text: 'Хотите получать напоминания по WhatsApp перед визитом?', options: [
+          { label: 'Да, пришлите', next: 'confirm' },
+          { label: 'Не нужно', next: 'confirm' },
+        ]},
+        confirm: { text: 'Готово, записал вас. Пришлю напоминания: сразу после записи, за день и за час до визита.', options: [] },
+      },
+    },
+    course: {
+      title: 'Онлайн-курс — покупка',
+      subtitle: 'Клиент интересуется курсом',
+      nodes: {
+        start: { text: 'Здравствуйте! Какой формат занятий вам интересен?', options: [
+          { label: 'Групповые занятия', next: 'level' },
+          { label: 'Индивидуальные', next: 'level' },
+        ]},
+        level: { text: 'Понял. Какой у вас сейчас уровень языка?', options: [
+          { label: 'С нуля', next: 'price' },
+          { label: 'Есть база', next: 'price' },
+        ]},
+        price: { text: 'Курс стоит €149, есть рассрочка на 3 месяца. На какой поток записать?', options: [
+          { label: 'Утренний', next: 'pay' },
+          { label: 'Вечерний', next: 'pay' },
+        ]},
+        pay: { text: 'Оформляем оплату сейчас или сначала пробное занятие?', options: [
+          { label: 'Оформить сразу', next: 'confirm' },
+          { label: 'Сначала пробное', next: 'confirm' },
+        ]},
+        confirm: { text: 'Отлично! Отправляю ссылку в WhatsApp. До встречи на занятии!', options: [] },
+      },
+    },
+    windows: {
+      title: 'Окна ПВХ — расчёт стоимости',
+      subtitle: 'Клиент считает окна',
+      nodes: {
+        start: { text: 'Здравствуйте! Считаем окна ПВХ. Для квартиры или для дома?', options: [
+          { label: 'Для квартиры', next: 'rooms' },
+          { label: 'Для дома', next: 'rooms' },
+        ]},
+        rooms: { text: 'Сколько окон нужно заменить?', options: [
+          { label: '1–3 окна', next: 'profile' },
+          { label: '4 и больше', next: 'profile' },
+        ]},
+        profile: { text: 'Какой материал вам нужен — алюминий или пластик (ПВХ)?', options: [
+          { label: 'Алюминий', next: 'sizesAsk' },
+          { label: 'Пластик (ПВХ)', next: 'sizesAsk' },
+        ]},
+        sizesAsk: { text: 'Готовы прислать примерные размеры окон?', options: [
+          { label: 'Да, пришлю', next: 'sizesInput' },
+          { label: 'Нет', next: 'photoAsk' },
+        ]},
+        sizesInput: { type: 'text_input', placeholder: 'Например: 120×150, 90×120 см', text: 'Напишите, пожалуйста, ширину и высоту каждого окна в сантиметрах — подойдёт и на глаз.', next: 'estimateFromSizes' },
+        estimateFromSizes: { text: 'Большое спасибо! Мы рассчитаем предварительную смету на основе ваших размеров и пришлём её в течение часа.', options: [] },
+        photoAsk: { text: 'А фото проёма, куда будут устанавливаться окна, сможете прислать? Так мастер точнее оценит монтаж.', options: [
+          { label: 'Да, пришлю фото', next: 'photoInput' },
+          { label: 'Нет', next: 'needMeasure' },
+        ]},
+        photoInput: { type: 'file_input', text: 'Прикрепите одно фото проёма — этого достаточно.', next: 'estimateFromPhoto' },
+        estimateFromPhoto: { text: 'Большое спасибо! Мы рассчитаем предварительную смету на основе ваших размеров и пришлём её в течение часа.', options: [] },
+        needMeasure: { text: 'Без фото тоже сможем прикинуть, но для точного расчёта нужны размеры окон. Готовы принять замерщика для бесплатного замера?', options: [
+          { label: 'Да, записать замерщика', next: 'visit' },
+          { label: 'Пока нет', next: 'visit' },
+        ]},
+        visit: { text: 'Когда удобно принять замерщика?', options: [
+          { label: 'В будни', next: 'confirm' },
+          { label: 'В выходные', next: 'confirm' },
+        ]},
+        confirm: { text: 'Записал вас на бесплатный замер, мастер уточнит точное время.', options: [] },
+      },
+    },
+  };
+
+  var demo = { key: null, node: null, log: [] };
+
+  function nodeType(node) {
+    if (!node) return null;
+    return node.type || (node.options && node.options.length ? 'choice' : 'end');
+  }
+
+  function renderDemo() {
+    var picksEl = document.getElementById('demo-picks');
+    var chatEl = document.getElementById('demo-chat');
+
+    picksEl.innerHTML = Object.keys(scenarios).map(function (key) {
+      var s = scenarios[key];
+      var active = demo.key === key;
+      return '<button class="card demo-pick" onclick="chooseDemo(\'' + key + '\')" style="padding:20px;display:flex;flex-direction:column;gap:6px;border-color:' + (active ? PRIMARY : '#E4DED2') + ';border-width:' + (active ? '2px' : '1px') + ';">' +
+        '<div style="font-weight:600;font-size:17px;">' + esc(s.title) + '</div>' +
+        '<div style="color:#5B655F;font-size:14px;">' + esc(s.subtitle) + '</div></button>';
+    }).join('');
+
+    if (!demo.key) { chatEl.innerHTML = ''; return; }
+
+    var scenario = scenarios[demo.key];
+    var node = demo.node ? scenario.nodes[demo.node] : null;
+    var type = nodeType(node);
+
+    var logHtml = demo.log.map(function (m) {
+      var isUser = m.from === 'user';
+      return '<div style="display:flex;justify-content:' + (isUser ? 'flex-end' : 'flex-start') + ';">' +
+        '<div style="max-width:80%;padding:10px 14px;border-radius:14px;background:' + (isUser ? CTA : '#F1EFE9') + ';color:' + (isUser ? '#FFFFFF' : '#1E2321') + ';font-size:15px;line-height:1.4;">' + esc(m.text) + '</div></div>';
+    }).join('');
+
+    var controls = '';
+    if (type === 'choice') {
+      controls = '<div style="display:flex;flex-direction:column;gap:8px;">' + node.options.map(function (o) {
+        return '<button class="btn opt-btn" onclick="pickOption(\'' + o.next + '\')" style="background:#FFFFFF;border:1px solid ' + PRIMARY + ';color:' + PRIMARY + ';justify-content:flex-start;padding:0 18px;">' + esc(o.label) + '</button>';
+      }).join('') + '</div>';
+    } else if (type === 'text_input') {
+      controls = '<div style="display:flex;flex-direction:column;gap:8px;">' +
+        '<input id="demo-text-input" type="text" placeholder="' + esc(node.placeholder || '') + '" style="padding:10px 14px;border:1px solid #C9C2B4;border-radius:10px;font-size:15px;font-family:\'Work Sans\',sans-serif;">' +
+        '<button class="btn opt-btn" onclick="submitDemoInput()" style="background:' + PRIMARY + ';color:#FFFFFF;">Отправить</button></div>';
+    } else if (type === 'file_input') {
+      controls = '<div style="display:flex;flex-direction:column;gap:8px;">' +
+        '<input id="demo-file-input" type="file" accept="image/*" style="font-size:14px;">' +
+        '<button class="btn opt-btn" onclick="submitDemoInput()" style="background:' + PRIMARY + ';color:#FFFFFF;">Отправить</button></div>';
+    } else if (type === 'end') {
+      controls = '<div style="display:flex;flex-direction:column;gap:10px;">' +
+        '<button class="btn opt-btn" onclick="restartDemo()" style="background:transparent;border:1px solid #C9C2B4;color:#1E2321;align-self:flex-start;">Пройти ещё раз</button>' +
+        '<div style="font-size:13px;color:#8A9089;line-height:1.4;">Это демо-версия с ограниченным числом вопросов. Под ваш бизнес бот разрабатывается индивидуально — со всеми нужными ветками диалога.</div></div>';
+    }
+
+    chatEl.innerHTML = '<div class="card" style="max-width:520px;padding:20px;display:flex;flex-direction:column;gap:14px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+      '<div style="font-weight:600;font-size:15px;color:' + PRIMARY + ';">' + esc(scenario.title) + '</div>' +
+      '<button class="icon-btn" aria-label="Закрыть демо" onclick="closeDemo()">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5B655F" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>' +
+      '<div style="display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;">' + logHtml + '</div>' +
+      controls + '</div>';
+  }
+
+  window.chooseDemo = function (key) {
+    var scenario = scenarios[key];
+    demo = { key: key, node: 'start', log: [{ from: 'bot', text: scenario.nodes.start.text }] };
+    renderDemo();
+  };
+  window.pickOption = function (next) {
+    var scenario = scenarios[demo.key];
+    var current = scenario.nodes[demo.node];
+    var opt = current.options.filter(function (o) { return o.next === next; })[0];
+    demo.node = next;
+    demo.log.push({ from: 'user', text: opt.label }, { from: 'bot', text: scenario.nodes[next].text });
+    renderDemo();
+  };
+  window.submitDemoInput = function () {
+    var scenario = scenarios[demo.key];
+    var node = scenario.nodes[demo.node];
+    var val;
+    if (node.type === 'text_input') {
+      var tEl = document.getElementById('demo-text-input');
+      val = (tEl && tEl.value.trim()) || 'Без уточнения';
+    } else if (node.type === 'file_input') {
+      var fEl = document.getElementById('demo-file-input');
+      var file = fEl && fEl.files && fEl.files[0];
+      val = file ? ('Фото прикреплено: ' + file.name) : 'Фото прикреплено';
+    }
+    var next = node.next;
+    demo.node = next;
+    demo.log.push({ from: 'user', text: val }, { from: 'bot', text: scenario.nodes[next].text });
+    renderDemo();
+  };
+  window.restartDemo = function () { if (demo.key) window.chooseDemo(demo.key); };
+  window.closeDemo = function () { demo = { key: null, node: null, log: [] }; renderDemo(); };
+
+  // OWN BOT WIDGET
+  var ownBotSteps = {
+    start: { text: 'Здравствуйте! Такого бота можно сделать и для вашего бизнеса. Что интересует?', options: [
+      { label: 'Сколько это стоит', next: 'price' },
+      { label: 'Как быстро сделаете', next: 'speed' },
+      { label: 'Хочу такого же бота', next: 'cta' },
+    ]},
+    price: { text: 'От €150 до €2000 в зависимости от сложности сценария — точнее скажу после короткого созвона.', options: [
+      { label: 'Как быстро сделаете', next: 'speed' },
+      { label: 'Хочу такого же бота', next: 'cta' },
+    ]},
+    speed: { text: 'Обычно 2–5 рабочих дней с момента брифа.', options: [
+      { label: 'Сколько это стоит', next: 'price' },
+      { label: 'Хочу такого же бота', next: 'cta' },
+    ]},
+    cta: { text: 'Отлично! Напишите в WhatsApp — обсудим сценарий для вашего бизнеса.', options: [] },
+  };
+  var ownBot = { open: false, dismissed: false, step: 'start' };
+
+  function renderOwnBot() {
+    var el = document.getElementById('own-bot-widget');
+    if (!ownBot.open) { el.innerHTML = ''; return; }
+    var node = ownBotSteps[ownBot.step];
+    var optsHtml = node.options.map(function (o) {
+      return '<button class="opt-btn" onclick="pickOwnBot(\'' + o.next + '\')" style="background:#F6F3EE;border:1px solid #E4DED2;border-radius:10px;padding:8px 12px;text-align:left;font-size:13px;">' + esc(o.label) + '</button>';
+    }).join('');
+    var ctaHtml = ownBot.step === 'cta' ? '<a href="https://wa.me/34602509014" class="btn" style="background:' + CTA + ';color:#FFFFFF;font-size:14px;min-height:40px;">Написать в WhatsApp</a>' : '';
+    el.innerHTML = '<div class="card" style="position:fixed;right:20px;bottom:20px;width:300px;max-width:calc(100vw - 40px);padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 28px rgba(0,0,0,0.18);z-index:40;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+      '<div style="font-weight:600;font-size:14px;color:' + PRIMARY + ';">Бот для бизнеса</div>' +
+      '<button class="icon-btn" aria-label="Закрыть чат" onclick="closeOwnBot()">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B655F" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>' +
+      '<div style="font-size:14px;line-height:1.5;color:#1E2321;">' + esc(node.text) + '</div>' +
+      (node.options.length ? '<div style="display:flex;flex-direction:column;gap:6px;">' + optsHtml + '</div>' : '') +
+      ctaHtml + '</div>';
+  }
+  window.pickOwnBot = function (next) { ownBot.step = next; renderOwnBot(); };
+  window.closeOwnBot = function () { ownBot.open = false; ownBot.dismissed = true; renderOwnBot(); };
+
+  setTimeout(function () {
+    if (!ownBot.dismissed) { ownBot.open = true; renderOwnBot(); }
+  }, 6000);
+
+  renderDemo();
+})();
+</script>
+</body>
+</html>
