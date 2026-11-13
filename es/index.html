@@ -413,9 +413,6 @@
     </div>
   </div>
 
-  <!-- OWN BOT WIDGET -->
-  <div id="own-bot-widget"></div>
-
 </div>
 
 <script>
@@ -615,48 +612,6 @@
   window.closeDemo = function () { demo = { key: null, node: null, log: [] }; renderDemo(); };
 
   // OWN BOT WIDGET
-  var ownBotSteps = {
-    start: { text: '¡Hola! Un bot como este también se puede hacer para tu negocio. ¿Qué te interesa?', options: [
-      { label: 'Cuánto cuesta', next: 'price' },
-      { label: 'En cuánto tiempo lo hacen', next: 'speed' },
-      { label: 'Quiero un bot así', next: 'cta' },
-    ]},
-    price: { text: 'Desde 150 € hasta 2000 €, según la complejidad del guion; te lo concretaré tras una breve llamada.', options: [
-      { label: 'En cuánto tiempo lo hacen', next: 'speed' },
-      { label: 'Quiero un bot así', next: 'cta' },
-    ]},
-    speed: { text: 'Normalmente de 3 a 5 días laborables desde el briefing.', options: [
-      { label: 'Cuánto cuesta', next: 'price' },
-      { label: 'Quiero un bot así', next: 'cta' },
-    ]},
-    cta: { text: '¡Genial! Escríbenos por Telegram y hablamos del guion para tu negocio.', options: [] },
-  };
-  var ownBot = { open: false, dismissed: false, step: 'start' };
-
-  function renderOwnBot() {
-    var el = document.getElementById('own-bot-widget');
-    if (!ownBot.open) { el.innerHTML = ''; return; }
-    var node = ownBotSteps[ownBot.step];
-    var optsHtml = node.options.map(function (o) {
-      return '<button class="opt-btn" onclick="pickOwnBot(\'' + o.next + '\')" style="background:#EEF9D2;border:1px solid #D6EBA4;border-radius:10px;padding:8px 12px;text-align:left;font-size:13px;">' + esc(o.label) + '</button>';
-    }).join('');
-    var ctaHtml = ownBot.step === 'cta' ? '<a href="https://t.me/tinker_chatbots_bot" class="btn" style="background:#111111;color:#FFFFFF;font-size:14px;min-height:40px;">Escribir por Telegram</a>' : '';
-    el.innerHTML = '<div class="card" style="position:fixed;right:20px;bottom:20px;width:300px;max-width:calc(100vw - 40px);padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:0 12px 28px rgba(0,0,0,0.18);z-index:40;">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;">' +
-      '<span class=\"tinker-logo\" role=\"img\" aria-label=\"Tinker\" style=\"height: 20px; width: 69px;\"></span>' +
-      '<button class="icon-btn" aria-label="Cerrar chat" onclick="closeOwnBot()">' +
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#62625D" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>' +
-      '<div style="font-size:14px;line-height:1.5;color:#111111;">' + esc(node.text) + '</div>' +
-      (node.options.length ? '<div style="display:flex;flex-direction:column;gap:6px;">' + optsHtml + '</div>' : '') +
-      ctaHtml + '</div>';
-  }
-  window.pickOwnBot = function (next) { ownBot.step = next; renderOwnBot(); };
-  window.closeOwnBot = function () { ownBot.open = false; ownBot.dismissed = true; renderOwnBot(); };
-
-  setTimeout(function () {
-    if (!ownBot.dismissed) { ownBot.open = true; renderOwnBot(); }
-  }, 6000);
-
   // CATEGORIES CAROUSEL (3 per page, auto-switch every 10 s)
   var catPage = 0, catTimer = null;
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -695,5 +650,6 @@
   renderDemo();
 })();
 </script>
+<script src="../widget.js" defer></script>
 </body>
 </html>
