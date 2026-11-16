@@ -112,7 +112,7 @@
   function render() {
     var T = t();
     langBox.innerHTML = '';
-    ['ru', 'es', 'en'].forEach(function (c) {
+    ['en', 'es', 'ru'].forEach(function (c) {
       langBox.appendChild(el('button', { type: 'button', 'aria-pressed': String(c === lang), text: c.toUpperCase(), on: { click: function () { lang = c; var keep = state.step; reset(); state.step = 'start'; say('b', t().start); render(); } } }));
     });
     launch.setAttribute('aria-label', T.open);
