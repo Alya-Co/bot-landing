@@ -3,7 +3,7 @@
    После «Принять» — полноценный режим с cookies. Выбор хранится в localStorage. */
 (function () {
   'use strict';
-  var CLARITY_ID = '__CLARITY_ID__';
+  var CLARITY_ID = 'zf1zld8xdx';
   var KEY = 'tk-consent';
   if (!CLARITY_ID || CLARITY_ID.indexOf('__') === 0) return;
 
